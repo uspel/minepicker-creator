@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import "./utils/package/checkNodeVersion";
 
 import updatePackageMessage from "./utils/package/updatePackage";
