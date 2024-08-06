@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "target": "ESNext",
+    "allowJs": true,
+    "resolveJsonModule": true,
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "moduleResolution": "Bundler",
+    "module": "ESNext",
+    "lib": ["ESNext"]
+  },
+  "include": ["src"]
+}

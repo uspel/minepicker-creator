@@ -1,0 +1,218 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "oneOf": [{ "$ref": "#/definitions/addon" }, { "$ref": "#/definitions/script_library" }],
+  "definitions": {
+    "addon": {
+      "type": "object",
+      "required": ["type", "target"],
+      "additionalProperties": false,
+      "definitions": {
+        "generate_contents": {
+          "title": "Generate Contents",
+          "description": "Whether Minepicker automatically generates a contents.json file for this pack.",
+          "type": "boolean"
+        }
+      },
+      "properties": {
+        "type": {
+          "enum": ["addon", "editor_extension"]
+        },
+        "target": {
+          "enum": ["stable", "preview"]
+        },
+        "resource_pack": {
+          "title": "Resource Pack",
+          "type": "object",
+          "required": ["directories"],
+          "additionalProperties": false,
+          "properties": {
+            "directories": {
+              "$ref": "#/definitions/directories"
+            },
+            "generate_contents": {
+              "$ref": "#/definitions/addon/definitions/generate_contents"
+            },
+            "textures": {
+              "title": "Textures",
+              "type": "object",
+              "properties": {
+                "generate_list": {
+                  "title": "Generate Textures List",
+                  "description": "Whether Minepicker automatically generates a textures_list.json file for this pack.",
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        },
+        "behavior_pack": {
+          "title": "Behavior Pack",
+          "type": "object",
+          "required": ["directories"],
+          "additionalProperties": false,
+          "properties": {
+            "directories": {
+              "$ref": "#/definitions/directories"
+            },
+            "generate_contents": {
+              "$ref": "#/definitions/addon/definitions/generate_contents"
+            },
+            "scripts": {
+              "title": "Scripts",
+              "type": "object",
+              "required": ["entry"],
+              "additionalProperties": false,
+              "properties": {
+                "entry": {
+                  "title": "Scripts Entry",
+                  "description": "Your main script file.",
+                  "type": "string",
+                  "examples": ["index.js", "index.ts"]
+                },
+                "automatic_reload": {
+                  "title": "Automatically Reload World",
+                  "description": "Starts a WebSocket that Minecraft clients can connect to in order to automatically run the \"/reload\" command when scripts are built.",
+                  "default": true,
+                  "oneOf": [
+                    {
+                      "type": "boolean"
+                    },
+                    {
+                      "type": "object",
+                      "required": ["port"],
+                      "additionalProperties": false,
+                      "properties": {
+                        "port": {
+                          "title": "Websocket Port",
+                          "description": "The port of localhost that the automatic reload WebSocket will be hosted on.",
+                          "type": "integer",
+                          "default": 19145
+                        }
+                      }
+                    }
+                  ]
+                },
+                "bundle": {
+                  "$ref": "#/definitions/scripts/definitions/bundle"
+                },
+                "dependencies": {
+                  "$ref": "#/definitions/scripts/definitions/dependencies"
+                },
+                "minify": {
+                  "$ref": "#/definitions/scripts/definitions/minify"
+                },
+                "source_map": {
+                  "$ref": "#/definitions/scripts/definitions/source_map"
+                },
+                "tree_shake": {
+                  "$ref": "#/definitions/scripts/definitions/tree_shake"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "script_library": {
+      "type": "object",
+      "required": ["type", "target"],
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "enum": ["script_library"]
+        },
+        "target": {
+          "enum": ["stable", "preview"]
+        },
+        "directories": {
+          "$ref": "#/definitions/directories"
+        },
+        "entries": {
+          "title": "Script Library Entries",
+          "type": "array",
+          "examples": [["index.js"], ["index.ts"]],
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "title": "Entry File",
+            "description": "A main script entry file.",
+            "type": "string"
+          }
+        },
+        "bundle": {
+          "$ref": "#/definitions/scripts/definitions/bundle"
+        },
+        "dependencies": {
+          "$ref": "#/definitions/scripts/definitions/dependencies"
+        },
+        "minify": {
+          "$ref": "#/definitions/scripts/definitions/minify"
+        },
+        "source_map": {
+          "$ref": "#/definitions/scripts/definitions/source_map"
+        },
+        "tree_shake": {
+          "$ref": "#/definitions/scripts/definitions/tree_shake"
+        }
+      }
+    },
+    "directories": {
+      "title": "Pack Directories",
+      "type": "object",
+      "required": ["source", "build", "development"],
+      "additionalProperties": false,
+      "properties": {
+        "source": {
+          "type": "string"
+        },
+        "build": {
+          "type": "string"
+        },
+        "development": {
+          "type": "string"
+        }
+      }
+    },
+    "scripts": {
+      "definitions": {
+        "bundle": {
+          "title": "Bundle Scripts",
+          "description": "Whether scripts are bundled into one file, disregarding the original file structure.",
+          "type": "boolean",
+          "default": false
+        },
+        "dependencies": {
+          "title": "External Script Dependencies",
+          "type": "object",
+          "examples": [{ "@minecraft/server": "1.0.0" }],
+          "additionalProperties": false,
+          "patternProperties": {
+            "^(@[a-z0-9-]+/)?[a-z0-9-]+$": {
+              "title": "External Minepicker Library",
+              "description": "Define a version range of this library that your scripts depend on.",
+              "type": "string"
+            }
+          }
+        },
+        "minify": {
+          "title": "Minify Scripts",
+          "description": "Compresses output script files, removing comments, whitespace and shortening names.",
+          "type": "boolean",
+          "default": false
+        },
+        "source_map": {
+          "title": "Emit Source Map Files",
+          "description": "Improves debugging by mapping outputted development files to their source files.",
+          "type": "boolean",
+          "default": true
+        },
+        "tree_shake": {
+          "title": "Tree Shake Scripts",
+          "description": "Whether unused code and intermediate files are removed from the outputted files.",
+          "type": "boolean",
+          "default": true
+        }
+      }
+    }
+  }
+}

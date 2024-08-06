@@ -1,0 +1,68 @@
+{
+  "name": "minepicker-creator",
+  "description": "A CLI to develop creations for Minecraft: Bedrock Edition easily.",
+  "version": "0.1.0",
+  "author": "Uspel",
+  "license": "MIT",
+  "homepage": "https://creator.minepicker.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/uspel/minepicker-creator.git"
+  },
+  "bugs": {
+    "url": "https://github.com/uspel/minepicker-creator/issues"
+  },
+  "files": [
+    "build",
+    "lib",
+    "LICENSE",
+    "README.md"
+  ],
+  "main": "build/cli.js",
+  "type": "module",
+  "bin": {
+    "minepicker": "build/cli.js"
+  },
+  "scripts": {
+    "build": "rollup -c --configPlugin rollup-plugin-ts",
+    "watch": "rollup -w -c --configPlugin rollup-plugin-ts"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@inquirer/prompts": "^5.3.7",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@supabase/supabase-js": "^2.45.0",
+    "ajv": "^8.17.1",
+    "chalk": "^5.3.0",
+    "chokidar": "^3.6.0",
+    "cli-progress": "^3.12.0",
+    "dir-compare": "^5.0.0",
+    "follow-redirects": "^1.15.6",
+    "json5": "^2.2.3",
+    "octokit": "^4.0.2",
+    "prettier": "^3.3.3",
+    "rollup": "^4.20.0",
+    "rollup-plugin-ts": "^3.4.5",
+    "semver": "^7.6.3",
+    "tar": "^7.4.3",
+    "tslib": "^2.6.3",
+    "typescript": "^5.5.4",
+    "uuid": "^10.0.0",
+    "ws": "^8.18.0",
+    "yargs": "^17.7.2"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^26.0.1",
+    "@types/cli-progress": "^3.11.6",
+    "@types/follow-redirects": "^1.14.4",
+    "@types/inquirer": "^9.0.7",
+    "@types/semver": "^7.5.8",
+    "@types/uuid": "^10.0.0",
+    "@types/ws": "^8.5.12",
+    "@types/yargs": "^17.0.32",
+    "rollup-plugin-node-externals": "^7.1.2"
+  }
+}
