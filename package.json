@@ -25,7 +25,9 @@
   },
   "scripts": {
     "build": "rollup -c --configPlugin rollup-plugin-ts",
-    "watch": "rollup -w -c --configPlugin rollup-plugin-ts"
+    "watch": "rollup -w -c --configPlugin rollup-plugin-ts",
+    "prepublish": "npm run build",
+    "publish": "npm publish"
   },
   "engines": {
     "node": ">=18"
